@@ -9,156 +9,69 @@
 <title>日常</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --cream: #fdf8f1;
-    --cream2: #f5edde;
-    --border: #ddd0b8;
-    --border2: #c8b89a;
-    --brown: #5a3e28;
-    --brown2: #7a5235;
-    --brown3: #8b6343;
-    --muted: #9c845e;
-    --light: #bfaa8c;
-    --ink: #3d2e1e;
-    --rule: #f0c8c0;
-    --tag-bg: #ede0cc;
+    --cream: #fdf8f1; --cream2: #f5edde; --border: #ddd0b8; --border2: #c8b89a;
+    --brown: #5a3e28; --brown2: #7a5235; --brown3: #8b6343; --muted: #9c845e;
+    --light: #bfaa8c; --ink: #3d2e1e; --rule: #f0c8c0; --tag-bg: #ede0cc;
   }
+  body { font-family: -apple-system, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', sans-serif; background: #f0e8d8; min-height: 100vh; color: var(--ink); }
 
-  body {
-    font-family: -apple-system, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', sans-serif;
-    background: #f0e8d8;
-    min-height: 100vh;
-    color: var(--ink);
-  }
-
-  /* ── LOCK SCREEN ── */
-  #lock-screen {
-    position: fixed; inset: 0; background: #f0e8d8;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    z-index: 1000; gap: 1.5rem;
-  }
+  /* LOCK */
+  #lock-screen { position: fixed; inset: 0; background: #f0e8d8; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; gap: 1.5rem; }
   #lock-screen h1 { font-size: 28px; color: var(--brown); font-weight: 400; letter-spacing: 0.08em; }
-  #lock-screen p { font-size: 13px; color: var(--muted); }
-  #lock-input {
-    padding: 10px 16px; border: 1.5px solid var(--border2); border-radius: 8px;
-    background: var(--cream); font-size: 16px; color: var(--brown);
-    font-family: inherit; text-align: center; width: 220px; outline: none;
-  }
+  #lock-screen p { font-size: 13px; color: var(--muted); text-align: center; line-height: 1.6; }
+  #lock-input { padding: 10px 16px; border: 1.5px solid var(--border2); border-radius: 8px; background: var(--cream); font-size: 16px; color: var(--brown); font-family: inherit; text-align: center; width: 220px; outline: none; }
   #lock-input:focus { border-color: var(--brown3); }
-  #lock-btn {
-    padding: 10px 28px; background: var(--brown2); color: var(--cream);
-    border: none; border-radius: 8px; font-size: 15px; font-family: inherit;
-    cursor: pointer; width: 220px;
-  }
+  #lock-btn { padding: 10px 28px; background: var(--brown2); color: var(--cream); border: none; border-radius: 8px; font-size: 15px; font-family: inherit; cursor: pointer; width: 220px; }
   #lock-btn:hover { background: var(--brown); }
   #lock-error { color: #a03020; font-size: 13px; display: none; }
-  #set-pw-link { font-size: 12px; color: var(--light); cursor: pointer; text-decoration: underline; margin-top: 0.5rem; }
 
-  /* ── APP ── */
+  /* APP */
   #app { display: none; max-width: 640px; margin: 0 auto; padding: 0 0 80px; }
-
-  .top-bar {
-    background: var(--cream); border-bottom: 1px solid var(--border);
-    padding: 14px 16px 10px; position: sticky; top: 0; z-index: 10;
-    display: flex; align-items: baseline; justify-content: space-between;
-  }
+  .top-bar { background: var(--cream); border-bottom: 1px solid var(--border); padding: 14px 16px 10px; position: sticky; top: 0; z-index: 10; display: flex; align-items: baseline; justify-content: space-between; }
   .top-bar h1 { font-size: 20px; color: var(--brown); font-weight: 400; letter-spacing: 0.05em; }
   .top-bar span { font-size: 11px; color: var(--light); }
+  .sync-status { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+  .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--light); display: inline-block; }
+  .sync-dot.ok { background: #5a9a6a; }
+  .sync-dot.syncing { background: var(--brown3); animation: pulse 1s infinite; }
+  .sync-dot.error { background: #a03020; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  .nav {
-    display: flex; background: var(--cream); border-bottom: 1.5px solid var(--border2);
-    position: sticky; top: 53px; z-index: 9;
-  }
-  .nav-btn {
-    flex: 1; padding: 10px 0; font-size: 13px; font-family: inherit;
-    background: transparent; border: none; border-bottom: 2.5px solid transparent;
-    color: var(--muted); cursor: pointer; margin-bottom: -1.5px;
-    transition: color 0.15s;
-  }
+  .nav { display: flex; background: var(--cream); border-bottom: 1.5px solid var(--border2); position: sticky; top: 53px; z-index: 9; }
+  .nav-btn { flex: 1; padding: 10px 0; font-size: 13px; font-family: inherit; background: transparent; border: none; border-bottom: 2.5px solid transparent; color: var(--muted); cursor: pointer; margin-bottom: -1.5px; transition: color 0.15s; }
   .nav-btn.active { color: var(--brown); border-bottom-color: var(--brown3); font-weight: 500; }
 
   section { display: none; padding: 16px; }
   section.active { display: block; }
 
-  /* ── WRITE ── */
-  .paper {
-    background: var(--cream); border: 1px solid var(--border);
-    border-radius: 10px; padding: 16px; position: relative;
-  }
-  .paper::before {
-    content: ''; position: absolute; top: 0; left: 50px; bottom: 0;
-    width: 1px; background: var(--rule);
-  }
-  .date-row {
-    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
-    margin-bottom: 12px; padding-bottom: 10px;
-    border-bottom: 1px dashed var(--border);
-    padding-left: 4px;
-  }
-  .date-row input[type="date"] {
-    background: transparent; border: none; font-size: 14px; color: var(--brown);
-    font-family: inherit; padding: 2px 4px; -webkit-appearance: none;
-  }
+  /* WRITE */
+  .paper { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 16px; position: relative; }
+  .paper::before { content: ''; position: absolute; top: 0; left: 50px; bottom: 0; width: 1px; background: var(--rule); }
+  .date-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px dashed var(--border); padding-left: 4px; }
+  .date-row input[type="date"] { background: transparent; border: none; font-size: 14px; color: var(--brown); font-family: inherit; padding: 2px 4px; }
   .date-row input[type="date"]:focus { outline: none; background: var(--cream2); border-radius: 4px; }
   .weather-row { display: flex; gap: 4px; align-items: center; }
-  .w-btn {
-    font-size: 17px; background: none; border: none; cursor: pointer;
-    padding: 2px 4px; border-radius: 4px; line-height: 1;
-  }
+  .w-btn { font-size: 17px; background: none; border: none; cursor: pointer; padding: 2px 4px; border-radius: 4px; line-height: 1; }
   .w-btn:hover, .w-btn.sel { background: var(--cream2); }
-
-  .field-lbl {
-    font-size: 10px; color: var(--muted); letter-spacing: 0.07em;
-    text-transform: uppercase; margin-bottom: 3px; padding-left: 58px;
-  }
-  .field-lbl:not(:first-of-type) { margin-top: 12px; }
-
-  .paper textarea {
-    width: 100%; background: transparent; border: none; resize: none;
-    font-family: inherit; font-size: 14px; color: var(--ink);
-    line-height: 1.9; padding: 4px 8px 4px 58px; outline: none;
-  }
+  .field-lbl { font-size: 10px; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 3px; padding-left: 58px; margin-top: 12px; }
+  .paper textarea { width: 100%; background: transparent; border: none; resize: none; font-family: inherit; font-size: 14px; color: var(--ink); line-height: 1.9; padding: 4px 8px 4px 58px; outline: none; }
   .paper textarea::placeholder { color: var(--light); }
-
-  .place-row {
-    display: flex; gap: 8px; align-items: center;
-    padding-left: 58px; margin-bottom: 12px;
-  }
-  .place-row select, .place-row input[type="text"] {
-    background: transparent; border: 1px solid var(--border);
-    border-radius: 6px; padding: 5px 8px; font-family: inherit;
-    font-size: 13px; color: var(--brown);
-  }
+  .place-row { display: flex; gap: 8px; align-items: center; padding-left: 58px; margin-bottom: 4px; }
+  .place-row select, .place-row input[type="text"] { background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 5px 8px; font-family: inherit; font-size: 13px; color: var(--brown); }
   .place-row select { max-width: 130px; }
   .place-row input[type="text"] { flex: 1; }
-  .place-row select:focus, .place-row input:focus {
-    outline: none; border-color: var(--brown3); background: var(--cream2);
-  }
-
-  .save-btn {
-    margin-left: 58px; margin-top: 4px; padding: 9px 22px;
-    background: var(--brown2); color: var(--cream); border: none;
-    border-radius: 7px; font-family: inherit; font-size: 14px; cursor: pointer;
-  }
+  .place-row select:focus, .place-row input:focus { outline: none; border-color: var(--brown3); background: var(--cream2); }
+  .save-btn { margin-left: 58px; margin-top: 12px; padding: 9px 22px; background: var(--brown2); color: var(--cream); border: none; border-radius: 7px; font-family: inherit; font-size: 14px; cursor: pointer; }
   .save-btn:active { transform: scale(0.97); }
   #save-msg { font-size: 13px; color: var(--brown3); margin-left: 10px; display: none; }
 
-  /* ── LIST ── */
+  /* LIST */
   .search-row { margin-bottom: 12px; }
-  .search-row input {
-    width: 100%; padding: 9px 12px; border: 1px solid var(--border);
-    border-radius: 8px; font-family: inherit; font-size: 13px;
-    background: var(--cream); color: var(--ink); outline: none;
-  }
+  .search-row input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 13px; background: var(--cream); color: var(--ink); outline: none; }
   .search-row input:focus { border-color: var(--brown3); }
-
   .entries { display: flex; flex-direction: column; gap: 10px; }
-  .ecard {
-    background: var(--cream); border: 1px solid var(--border);
-    border-radius: 10px; padding: 12px 14px; cursor: pointer;
-    transition: border-color 0.15s; position: relative;
-  }
+  .ecard { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; cursor: pointer; transition: border-color 0.15s; position: relative; }
   .ecard:hover { border-color: var(--brown3); }
   .ecard-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
   .ecard-date { font-size: 12px; font-weight: 500; color: var(--brown3); }
@@ -166,83 +79,48 @@
   .ecard-place { font-size: 11px; color: var(--muted); margin-bottom: 5px; }
   .ecard-preview { font-size: 13px; color: var(--brown); line-height: 1.6; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   .ecard-tag { display: inline-block; font-size: 10px; background: var(--tag-bg); color: var(--brown2); padding: 2px 7px; border-radius: 8px; margin-top: 6px; }
-  .del-btn {
-    position: absolute; top: 10px; right: 10px; background: none; border: none;
-    font-size: 14px; color: var(--light); cursor: pointer; padding: 3px 6px;
-    border-radius: 4px;
-  }
+  .del-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 14px; color: var(--light); cursor: pointer; padding: 3px 6px; border-radius: 4px; }
   .del-btn:hover { background: #f0c8c0; color: #a03020; }
 
-  /* ── STATS ── */
+  /* STATS */
   .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
   @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } }
-  .sbox {
-    background: var(--cream); border: 1px solid var(--border);
-    border-radius: 10px; padding: 12px 14px;
-  }
+  .sbox { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
   .sbox-title { font-size: 11px; color: var(--muted); margin-bottom: 10px; letter-spacing: 0.04em; }
   .srow { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
   .slabel { font-size: 12px; color: var(--brown); min-width: 70px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100px; }
   .sbar-w { flex: 1; background: var(--tag-bg); border-radius: 3px; height: 7px; overflow: hidden; }
   .sbar { height: 100%; background: var(--brown3); border-radius: 3px; transition: width 0.5s; }
   .scount { font-size: 11px; color: var(--muted); min-width: 28px; text-align: right; }
-
-  .ai-btn {
-    padding: 9px 20px; background: var(--brown2); color: var(--cream);
-    border: none; border-radius: 7px; font-family: inherit; font-size: 14px;
-    cursor: pointer; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
-  }
+  .ai-btn { padding: 9px 20px; background: var(--brown2); color: var(--cream); border: none; border-radius: 7px; font-family: inherit; font-size: 14px; cursor: pointer; margin-bottom: 14px; }
   .ai-btn:active { transform: scale(0.97); }
-  .ai-result {
-    background: var(--cream); border: 1px solid var(--border);
-    border-radius: 10px; padding: 14px; font-size: 13px;
-    color: var(--ink); line-height: 1.85; white-space: pre-wrap;
-    display: none; margin-bottom: 12px;
-  }
+  .ai-result { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 14px; font-size: 13px; color: var(--ink); line-height: 1.85; white-space: pre-wrap; display: none; margin-bottom: 12px; }
 
-  /* ── SETTINGS ── */
+  /* SETTINGS */
   .setting-group { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 12px; }
   .setting-group h3 { font-size: 13px; color: var(--brown); font-weight: 500; margin-bottom: 10px; }
+  .setting-group p { font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
   .setting-group label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 4px; }
-  .setting-group input[type="password"] {
-    width: 100%; padding: 8px 10px; border: 1px solid var(--border);
-    border-radius: 6px; font-family: inherit; font-size: 14px;
-    background: var(--cream2); color: var(--ink); outline: none; margin-bottom: 8px;
-  }
+  .setting-group input[type="password"] { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 14px; background: var(--cream2); color: var(--ink); outline: none; margin-bottom: 8px; }
   .setting-group input:focus { border-color: var(--brown3); }
-  .setting-btn {
-    padding: 8px 18px; border: 1px solid var(--border2);
-    border-radius: 6px; font-family: inherit; font-size: 13px;
-    background: transparent; color: var(--brown); cursor: pointer;
-  }
+  .setting-btn { padding: 8px 18px; border: 1px solid var(--border2); border-radius: 6px; font-family: inherit; font-size: 13px; background: transparent; color: var(--brown); cursor: pointer; }
   .setting-btn:hover { background: var(--cream2); }
   .setting-btn.danger { color: #a03020; border-color: #f0c8c0; }
   .setting-btn.danger:hover { background: #fdf0ee; }
   .setting-msg { font-size: 12px; color: var(--brown3); margin-top: 6px; display: none; }
 
-  /* ── MODAL ── */
-  .modal-bg {
-    display: none; position: fixed; inset: 0;
-    background: rgba(60,40,20,0.4); z-index: 200;
-    align-items: flex-end; justify-content: center;
-  }
+  /* MODAL */
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(60,40,20,0.4); z-index: 200; align-items: flex-end; justify-content: center; }
   .modal-bg.open { display: flex; }
-  .modal {
-    background: var(--cream); border-radius: 16px 16px 0 0;
-    padding: 20px 18px 36px; width: 100%; max-width: 640px;
-    max-height: 85vh; overflow-y: auto;
-  }
+  .modal { background: var(--cream); border-radius: 16px 16px 0 0; padding: 20px 18px 36px; width: 100%; max-width: 640px; max-height: 85vh; overflow-y: auto; }
   .modal-date { font-size: 13px; font-weight: 500; color: var(--brown3); margin-bottom: 12px; }
   .modal-sec { margin-top: 12px; }
   .modal-sec-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
   .modal-text { font-size: 14px; color: var(--ink); line-height: 1.85; white-space: pre-wrap; }
-  .modal-close {
-    margin-top: 16px; padding: 9px 22px; background: var(--tag-bg);
-    color: var(--brown); border: none; border-radius: 7px;
-    font-family: inherit; font-size: 13px; cursor: pointer;
-  }
+  .modal-close { margin-top: 16px; padding: 9px 22px; background: var(--tag-bg); color: var(--brown); border: none; border-radius: 7px; font-family: inherit; font-size: 13px; cursor: pointer; }
 
   .empty { text-align: center; color: var(--light); font-size: 13px; padding: 2.5rem 0; line-height: 1.8; }
+  .loading { text-align: center; color: var(--muted); font-size: 13px; padding: 2rem 0; }
 </style>
 </head>
 <body>
@@ -254,14 +132,16 @@
   <input type="password" id="lock-input" placeholder="パスワード" autocomplete="current-password">
   <button id="lock-btn" onclick="tryUnlock()">開く</button>
   <span id="lock-error">パスワードが違います</span>
-  <span id="set-pw-link" onclick="showSetPw()" style="display:none">パスワードを設定する</span>
 </div>
 
 <!-- APP -->
 <div id="app">
   <div class="top-bar">
     <h1>日常</h1>
-    <span id="entry-count"></span>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+      <span id="entry-count"></span>
+      <div class="sync-status"><span class="sync-dot" id="sync-dot"></span><span id="sync-label">--</span></div>
+    </div>
   </div>
   <nav class="nav">
     <button class="nav-btn active" onclick="switchTab('write',this)">✏️ 書く</button>
@@ -282,21 +162,15 @@
           <button class="w-btn" onclick="setW(this,'❄️')">❄️</button>
         </div>
       </div>
-
       <div class="field-lbl">場所</div>
       <div class="place-row">
-        <select id="inp-pref">
-          <option value="">都道府県</option>
-        </select>
+        <select id="inp-pref"><option value="">都道府県</option></select>
         <input type="text" id="inp-place-name" placeholder="場所の名前（任意）">
       </div>
-
       <div class="field-lbl">できごと</div>
       <textarea id="inp-diary" rows="6" placeholder="今日はどんな一日でしたか…"></textarea>
-
       <div class="field-lbl">豆知識・学んだこと</div>
       <textarea id="inp-trivia" rows="3" placeholder="気づいたこと、学んだことを…"></textarea>
-
       <div style="margin-top:12px">
         <button class="save-btn" onclick="saveEntry()">保存する</button>
         <span id="save-msg">保存しました ✓</span>
@@ -331,6 +205,12 @@
   <!-- SETTINGS -->
   <section id="sec-settings">
     <div class="setting-group">
+      <h3>同期状態</h3>
+      <p>Googleスプレッドシートと自動で同期されます。スマホ・PCどちらで書いても同じデータが見られます。</p>
+      <button class="setting-btn" onclick="syncFromSheet()">今すぐ同期する</button>
+      <p class="setting-msg" id="sync-msg"></p>
+    </div>
+    <div class="setting-group">
       <h3>パスワードを変更する</h3>
       <label>現在のパスワード</label>
       <input type="password" id="cur-pw" placeholder="現在のパスワード">
@@ -342,17 +222,12 @@
       <p class="setting-msg" id="pw-msg"></p>
     </div>
     <div class="setting-group">
-      <h3>データのエクスポート</h3>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">記録をJSONファイルとして保存できます</p>
-      <button class="setting-btn" onclick="exportData()">書き出す</button>
-    </div>
-    <div class="setting-group">
       <h3>ログアウト</h3>
       <button class="setting-btn" onclick="logout()">ロック画面に戻る</button>
     </div>
     <div class="setting-group">
       <h3>データを削除する</h3>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">すべての記録とパスワードが消えます</p>
+      <p>すべての記録とパスワードが消えます</p>
       <button class="setting-btn danger" onclick="clearAll()">すべて削除する</button>
     </div>
   </section>
@@ -380,20 +255,16 @@
 
 <script>
 const PREFS = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県","茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県","新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県","静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県","奈良県","和歌山県","鳥取県","島根県","岡山県","広島県","山口県","徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県","熊本県","大分県","宮崎県","鹿児島県","沖縄県"];
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwLJIEeQMwEbZ9S3j5JbO_WqReuJ3W9m4tEaRe-IcKuGI9apu6M_NPT_Elr7MPOuLad1A/exec';
 const PW_KEY = 'nichijo_pw';
 const DATA_KEY = 'nichijo_entries_v2';
 let entries = [];
 let selectedWeather = '';
-let currentViewIdx = null;
 
 // ── PASSWORD ──
 function hashPw(pw) {
-  // 簡易ハッシュ（FNV-1a）
   let h = 2166136261;
-  for (let i = 0; i < pw.length; i++) {
-    h ^= pw.charCodeAt(i);
-    h = (h * 16777619) >>> 0;
-  }
+  for (let i = 0; i < pw.length; i++) { h ^= pw.charCodeAt(i); h = (h * 16777619) >>> 0; }
   return h.toString(16);
 }
 function storedHash() { return localStorage.getItem(PW_KEY); }
@@ -402,28 +273,24 @@ function tryUnlock() {
   const pw = document.getElementById('lock-input').value;
   const hash = storedHash();
   if (!hash) {
-    // 初回：パスワード未設定
-    if (pw.length < 4) { showError('4文字以上で入力してください'); return; }
+    if (pw.length < 4) { showLockError('4文字以上で入力してください'); return; }
     localStorage.setItem(PW_KEY, hashPw(pw));
     unlock();
   } else {
-    if (hashPw(pw) === hash) { unlock(); }
-    else { showError('パスワードが違います'); }
+    if (hashPw(pw) === hash) unlock();
+    else showLockError('パスワードが違います');
   }
 }
-function showError(msg) {
+function showLockError(msg) {
   const el = document.getElementById('lock-error');
   el.textContent = msg; el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 2000);
-}
-function showSetPw() {
-  document.getElementById('lock-sub').textContent = '初回設定：パスワードを決めてください';
-  document.getElementById('set-pw-link').style.display = 'none';
+  setTimeout(() => el.style.display = 'none', 2500);
 }
 function unlock() {
   document.getElementById('lock-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  loadData(); initDate(); initPrefs(); updateCount();
+  loadLocal(); initDate(); initPrefs(); updateCount();
+  syncFromSheet();
 }
 function logout() {
   document.getElementById('app').style.display = 'none';
@@ -431,25 +298,66 @@ function logout() {
   document.getElementById('lock-input').value = '';
 }
 
-// 初回アクセス時の表示
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('lock-input').addEventListener('keydown', e => { if(e.key==='Enter') tryUnlock(); });
-  if (!storedHash()) {
-    document.getElementById('lock-sub').textContent = '初回設定：パスワードを決めてください（4文字以上）';
-  }
+  if (!storedHash()) document.getElementById('lock-sub').textContent = '初回設定：パスワードを決めてください（4文字以上）';
 });
 
-// ── DATA ──
-function loadData() {
-  try { entries = JSON.parse(localStorage.getItem(DATA_KEY)) || []; }
-  catch { entries = []; }
+// ── LOCAL ──
+function loadLocal() {
+  try { entries = JSON.parse(localStorage.getItem(DATA_KEY)) || []; } catch { entries = []; }
 }
-function saveData() { localStorage.setItem(DATA_KEY, JSON.stringify(entries)); }
-function updateCount() {
-  document.getElementById('entry-count').textContent = entries.length > 0 ? `${entries.length}件` : '';
+function saveLocal() { localStorage.setItem(DATA_KEY, JSON.stringify(entries)); }
+function updateCount() { document.getElementById('entry-count').textContent = entries.length > 0 ? `${entries.length}件` : ''; }
+
+// ── SYNC ──
+function setSyncStatus(state, label) {
+  const dot = document.getElementById('sync-dot');
+  dot.className = 'sync-dot ' + state;
+  document.getElementById('sync-label').textContent = label;
 }
 
-// ── UI INIT ──
+async function syncFromSheet() {
+  setSyncStatus('syncing', '同期中…');
+  try {
+    const res = await fetch(GAS_URL + '?t=' + Date.now());
+    const data = await res.json();
+    if (Array.isArray(data)) {
+      const remote = data.filter(e => e.id).map(e => ({
+        id: Number(e.id), date: e.date || '', weather: e.weather || '',
+        prefecture: e.prefecture || '', placeName: e.placeName || '',
+        diary: e.diary || '', trivia: e.trivia || '', createdAt: e.createdAt || ''
+      }));
+      // ローカルとマージ（idで重複排除、新しい方を優先）
+      const map = {};
+      [...remote, ...entries].forEach(e => { if (e.id) map[e.id] = e; });
+      entries = Object.values(map).sort((a,b) => b.id - a.id);
+      saveLocal(); updateCount();
+      setSyncStatus('ok', '同期済み');
+      const activeSection = document.querySelector('section.active');
+      if (activeSection && activeSection.id === 'sec-list') renderList();
+      if (activeSection && activeSection.id === 'sec-stats') renderStats();
+    } else {
+      setSyncStatus('error', '同期失敗');
+    }
+  } catch(e) {
+    setSyncStatus('error', 'オフライン');
+  }
+}
+
+async function pushToSheet(action, payload) {
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action, ...payload })
+    });
+    setSyncStatus('ok', '同期済み');
+  } catch {
+    setSyncStatus('error', '同期失敗');
+  }
+}
+
+// ── UI ──
 function initDate() {
   const t = new Date();
   const y = t.getFullYear(), m = String(t.getMonth()+1).padStart(2,'0'), d = String(t.getDate()).padStart(2,'0');
@@ -461,8 +369,7 @@ function initPrefs() {
 }
 function setW(btn, w) {
   document.querySelectorAll('.w-btn').forEach(b => b.classList.remove('sel'));
-  btn.classList.add('sel');
-  selectedWeather = w;
+  btn.classList.add('sel'); selectedWeather = w;
 }
 function switchTab(tab, btn) {
   document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
@@ -474,7 +381,7 @@ function switchTab(tab, btn) {
 }
 
 // ── SAVE ──
-function saveEntry() {
+async function saveEntry() {
   const diary = document.getElementById('inp-diary').value.trim();
   if (!diary) { alert('できごとを書いてください'); return; }
   const entry = {
@@ -483,18 +390,19 @@ function saveEntry() {
     weather: selectedWeather,
     prefecture: document.getElementById('inp-pref').value,
     placeName: document.getElementById('inp-place-name').value.trim(),
-    diary,
-    trivia: document.getElementById('inp-trivia').value.trim(),
+    diary, trivia: document.getElementById('inp-trivia').value.trim(),
     createdAt: new Date().toISOString()
   };
   entries.unshift(entry);
-  saveData(); updateCount();
+  saveLocal(); updateCount();
   ['inp-diary','inp-trivia','inp-place-name'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('inp-pref').value = '';
   selectedWeather = '';
   document.querySelectorAll('.w-btn').forEach(b => b.classList.remove('sel'));
   const msg = document.getElementById('save-msg');
   msg.style.display = 'inline'; setTimeout(() => msg.style.display = 'none', 2000);
+  setSyncStatus('syncing', '保存中…');
+  await pushToSheet('save', { entry });
 }
 
 // ── LIST ──
@@ -510,28 +418,25 @@ function renderList() {
     !kw || e.diary.toLowerCase().includes(kw) || (e.trivia||'').toLowerCase().includes(kw) ||
     (e.prefecture||'').includes(kw) || (e.placeName||'').toLowerCase().includes(kw)
   );
-  if (filtered.length === 0) {
-    el.innerHTML = '<p class="empty">記録がありません。<br>「書く」から最初の一ページを。</p>'; return;
-  }
-  el.innerHTML = filtered.map((e, i) => {
+  if (!filtered.length) { el.innerHTML = '<p class="empty">記録がありません。<br>「書く」から最初の一ページを。</p>'; return; }
+  el.innerHTML = filtered.map(e => {
     const origIdx = entries.indexOf(e);
-    return `
-    <div class="ecard" onclick="openModal(${origIdx})">
+    return `<div class="ecard" onclick="openModal(${origIdx})">
       <button class="del-btn" onclick="deleteEntry(event,${origIdx})" aria-label="削除">✕</button>
-      <div class="ecard-head">
-        <span class="ecard-date">${fmtDate(e.date)}</span>
-        <span class="ecard-weather">${e.weather||''}</span>
-      </div>
+      <div class="ecard-head"><span class="ecard-date">${fmtDate(e.date)}</span><span class="ecard-weather">${e.weather||''}</span></div>
       ${(e.prefecture||e.placeName)?`<div class="ecard-place">📍 ${[e.prefecture,e.placeName].filter(Boolean).join(' / ')}</div>`:''}
       <div class="ecard-preview">${e.diary}</div>
       ${e.trivia?`<span class="ecard-tag">💡 ${e.trivia.slice(0,24)}${e.trivia.length>24?'…':''}</span>`:''}
     </div>`;
   }).join('');
 }
-function deleteEntry(ev, i) {
+async function deleteEntry(ev, i) {
   ev.stopPropagation();
   if (!confirm('この記録を削除しますか？')) return;
-  entries.splice(i, 1); saveData(); updateCount(); renderList();
+  const id = entries[i].id;
+  entries.splice(i, 1); saveLocal(); updateCount(); renderList();
+  setSyncStatus('syncing', '削除中…');
+  await pushToSheet('delete', { id });
 }
 function openModal(i) {
   const e = entries[i];
@@ -555,8 +460,7 @@ function renderStats() {
   });
   const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,7);
   const max = sorted.length ? sorted[0][1] : 1;
-  const el = document.getElementById('place-stats');
-  el.innerHTML = sorted.length
+  document.getElementById('place-stats').innerHTML = sorted.length
     ? sorted.map(([k,v]) => `<div class="srow"><span class="slabel" title="${k}">${k}</span><div class="sbar-w"><div class="sbar" style="width:${Math.round(v/max*100)}%"></div></div><span class="scount">${v}回</span></div>`).join('')
     : '<p style="font-size:12px;color:#bfaa8c;">場所の記録がありません</p>';
 }
@@ -567,30 +471,10 @@ async function analyzeEntries() {
   box.style.display = 'block'; box.textContent = '✦ 分析中…';
   timeEl.innerHTML = '<p style="font-size:12px;color:#9c845e;">分析中...</p>';
   const diaries = entries.slice(0,20).map(e=>`【${e.date}】${e.diary}`).join('\n\n');
-  const prompt = `以下は私の日記の記録です。
-この日記を読んで、以下の2点を分析してください：
-
-1. 「時間の使い方の傾向」（仕事・趣味・外出・勉強・休息などのカテゴリに分け、それぞれに費やしていそうな時間の割合を推定。割合は合計100%になるように）
-
-2. 「生活の傾向や気づき」（短く3〜4文で）
-
-回答は日本語で、親しみやすく温かみのある文体でお願いします。
-
----
-${diaries}
----
-
-回答形式：
-【時間の使い方】
-カテゴリ名: XX%
-（5〜7カテゴリ）
-
-【生活の傾向と気づき】
-（文章で）`;
+  const prompt = `以下は私の日記の記録です。この日記を読んで、以下の2点を分析してください：\n\n1. 「時間の使い方の傾向」（仕事・趣味・外出・勉強・休息などのカテゴリに分け、それぞれに費やしていそうな時間の割合を推定。割合は合計100%になるように）\n\n2. 「生活の傾向や気づき」（短く3〜4文で）\n\n回答は日本語で、親しみやすく温かみのある文体でお願いします。\n\n---\n${diaries}\n---\n\n回答形式：\n【時間の使い方】\nカテゴリ名: XX%\n（5〜7カテゴリ）\n\n【生活の傾向と気づき】\n（文章で）`;
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, messages: [{ role: "user", content: prompt }] })
     });
     const data = await res.json();
@@ -602,12 +486,17 @@ ${diaries}
       const maxV = Math.max(...items.map(x=>x.val));
       timeEl.innerHTML = items.map(it=>`<div class="srow"><span class="slabel" title="${it.label}">${it.label}</span><div class="sbar-w"><div class="sbar" style="width:${Math.round(it.val/maxV*100)}%"></div></div><span class="scount">${it.val}%</span></div>`).join('');
     } else { timeEl.innerHTML = '<p style="font-size:12px;color:#bfaa8c;">上の結果をご確認ください</p>'; }
-  } catch {
-    box.textContent = 'エラーが発生しました。もう一度お試しください。';
-  }
+  } catch { box.textContent = 'エラーが発生しました。もう一度お試しください。'; }
 }
 
 // ── SETTINGS ──
+async function syncFromSheetManual() {
+  const msg = document.getElementById('sync-msg');
+  msg.style.display = 'block'; msg.textContent = '同期中…';
+  await syncFromSheet();
+  msg.textContent = '同期しました ✓';
+  setTimeout(() => msg.style.display = 'none', 2000);
+}
 function changePw() {
   const cur = document.getElementById('cur-pw').value;
   const nw = document.getElementById('new-pw').value;
@@ -620,11 +509,6 @@ function changePw() {
   localStorage.setItem(PW_KEY, hashPw(nw));
   msg.textContent = 'パスワードを変更しました ✓'; msg.style.color='var(--brown3)';
   ['cur-pw','new-pw','new-pw2'].forEach(id => document.getElementById(id).value='');
-}
-function exportData() {
-  const blob = new Blob([JSON.stringify(entries, null, 2)], {type:'application/json'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = `nichijo_${new Date().toISOString().slice(0,10)}.json`; a.click();
 }
 function clearAll() {
   if (!confirm('本当にすべてのデータを削除しますか？\nこの操作は元に戻せません。')) return;
