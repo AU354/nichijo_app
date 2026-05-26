@@ -287,12 +287,15 @@ function showLockError(msg) {
   setTimeout(() => el.style.display = 'none', 2500);
 }
 function unlock() {
+  isUnlocked = true;
   document.getElementById('lock-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   loadLocal(); initDate(); initPrefs(); updateCount();
   syncFromSheet();
 }
 function logout() {
+  isUnlocked = false;
+  entries = [];
   document.getElementById('app').style.display = 'none';
   document.getElementById('lock-screen').style.display = 'flex';
   document.getElementById('lock-input').value = '';
@@ -317,7 +320,11 @@ function setSyncStatus(state, label) {
   document.getElementById('sync-label').textContent = label;
 }
 
+let isUnlocked = false;
+
 async function syncFromSheet() {
+  // パスワード解除済みの場合のみ同期する
+  if (!isUnlocked) return;
   setSyncStatus('syncing', '同期中…');
   try {
     const res = await fetch(GAS_URL + '?t=' + Date.now());
